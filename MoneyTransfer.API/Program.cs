@@ -14,6 +14,7 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using MoneyTransfer.Service.Validations;
 using System.Reflection;
+using MoneyTransfer.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,6 +81,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
