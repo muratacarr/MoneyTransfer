@@ -22,12 +22,12 @@ namespace MoneyTransfer.API.Controllers
         {
             return ActionResultInstance(await _userService.CreateUserAsync(createUserDto));
         }
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> GetUser()
-        {
-            return ActionResultInstance(await _userService.GetUserByNameAsync(HttpContext.User.Identity.Name));
-        }
         
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            return ActionResultInstance(await _userService.DeleteUser(id));
+        }
+
     }
 }

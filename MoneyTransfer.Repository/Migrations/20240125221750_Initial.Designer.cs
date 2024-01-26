@@ -12,7 +12,7 @@ using MoneyTransfer.Repository.Contexts;
 namespace MoneyTransfer.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240125202814_Initial")]
+    [Migration("20240125221750_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -158,6 +158,69 @@ namespace MoneyTransfer.Repository.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MoneyTransfer.Core.Entities.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccountTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Money")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountTypeId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Account");
+                });
+
+            modelBuilder.Entity("MoneyTransfer.Core.Entities.AccountType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccountType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "TRY"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "USD"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "EUR"
+                        });
+                });
+
             modelBuilder.Entity("MoneyTransfer.Core.Entities.AppUser", b =>
                 {
                     b.Property<int>("Id")
@@ -275,6 +338,35 @@ namespace MoneyTransfer.Repository.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MoneyTransfer.Core.Entities.Account", b =>
+                {
+                    b.HasOne("MoneyTransfer.Core.Entities.AccountType", "AccountType")
+                        .WithMany("Accounts")
+                        .HasForeignKey("AccountTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoneyTransfer.Core.Entities.AppUser", "AppUser")
+                        .WithMany("Accounts")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AccountType");
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("MoneyTransfer.Core.Entities.AccountType", b =>
+                {
+                    b.Navigation("Accounts");
+                });
+
+            modelBuilder.Entity("MoneyTransfer.Core.Entities.AppUser", b =>
+                {
+                    b.Navigation("Accounts");
                 });
 #pragma warning restore 612, 618
         }

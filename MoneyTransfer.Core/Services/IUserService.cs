@@ -10,6 +10,6 @@ namespace MoneyTransfer.Core.Services
     public interface IUserService
     {
         Task<CustomResponse<AppUserDto>> CreateUserAsync(CreateUserDto createUserDto);
-        Task<CustomResponse<AppUserDto>> GetUserByNameAsync(string name);
+        Task<CustomResponse<NoDataDto>> DeleteUser(int id);
     }
 }

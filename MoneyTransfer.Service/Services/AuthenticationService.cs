@@ -31,11 +31,11 @@ namespace MoneyTransfer.Service.Services
         {
             if (loginDto == null) throw new ArgumentNullException(nameof(loginDto));
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
-            if (user == null) return CustomResponse<TokenDto>.Fail("Email or Password is wrong", 400, true);
+            if (user == null) return CustomResponse<TokenDto>.Fail("Email or Password is wrong", 400);
             var checkPassword = await _userManager.CheckPasswordAsync(user, loginDto.Password);
             if (!checkPassword)
             {
-                return CustomResponse<TokenDto>.Fail("Email or Password is wrong", 400, true);
+                return CustomResponse<TokenDto>.Fail("Email or Password is wrong", 400);
             }
             var token = _tokenService.CreateToken(user);
             await _unitOfWork.SaveChangesAsync();

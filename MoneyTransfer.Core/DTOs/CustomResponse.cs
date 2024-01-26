@@ -29,9 +29,9 @@ namespace MoneyTransfer.Core.DTOs
                 StatusCode = statusCode
             };
         }
-        public static CustomResponse<T> Fail(string errorMessage, int statusCode, bool isShow)
+        public static CustomResponse<T> Fail(string errorMessage, int statusCode)
         {
-            var errorDto = new ErrorDto(errorMessage, isShow);
+            var errorDto = new ErrorDto(errorMessage);
             return new CustomResponse<T> { Error = errorDto, StatusCode = statusCode};
         }
     }

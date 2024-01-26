@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using MoneyTransfer.Core.Configuration;
+using MoneyTransfer.Core.Options;
 using MoneyTransfer.Core.DTOs;
 using MoneyTransfer.Core.Entities;
 using MoneyTransfer.Core.Services;
@@ -30,14 +30,14 @@ namespace MoneyTransfer.Service.Services
 
         public TokenDto CreateToken(AppUser appUser)
         {
-            var accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOption.AccessTokenExpiration);
+            var tokenExpiration = DateTime.Now.AddMinutes(_tokenOption.TokenExpiration);
             var securityKey = SignService.GetSymmetricSecurityKey(_tokenOption.SecurityKey);
 
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
             JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(
                 issuer: _tokenOption.Issuer,
-                expires: accessTokenExpiration,
+                expires: tokenExpiration,
                 notBefore: DateTime.Now,
                 claims: GetClaim(appUser, _tokenOption.Audience),
                 signingCredentials: signingCredentials
@@ -48,8 +48,8 @@ namespace MoneyTransfer.Service.Services
 
             var tokenDto = new TokenDto
             {
-                AccessToken = token,
-                AccessTokenExpiration = accessTokenExpiration,
+                Token = token,
+                TokenExpiration = tokenExpiration,
             };
 
             return tokenDto;

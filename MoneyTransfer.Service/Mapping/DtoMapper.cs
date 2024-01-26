@@ -14,6 +14,7 @@ namespace MoneyTransfer.Service.Mapping
         public DtoMapper()
         {
             CreateMap<AppUserDto, AppUser>().ReverseMap();
+            CreateMap<Account, AccountDto>().ReverseMap();
         }
     }
 }

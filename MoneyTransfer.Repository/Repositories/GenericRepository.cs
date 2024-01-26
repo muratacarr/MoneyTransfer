@@ -31,11 +31,6 @@ namespace MoneyTransfer.Repository.Repositories
             _dbSet.Remove(entity);
         }
 
-        public async Task<List<T>> GetAllAsync()
-        {
-            return await _dbSet.ToListAsync();
-        }
-
         public async Task<T> GetByIdAsync(int id)
         {
             var entity = await _dbSet.FindAsync(id);
@@ -44,11 +39,6 @@ namespace MoneyTransfer.Repository.Repositories
                 _appDbContext.Entry(entity).State = EntityState.Detached;
             }
             return entity!;
-        }
-
-        public void Update(T entity)
-        {
-            _appDbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public IQueryable<T> Where(System.Linq.Expressions.Expression<Func<T, bool>> predicate)

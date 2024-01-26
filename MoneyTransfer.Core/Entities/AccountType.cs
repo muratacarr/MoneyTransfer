@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace MoneyTransfer.Core.Entities
 {
-    public class AppUser : IdentityUser<int>
+    public class AccountType
     {
-        public override int Id { get => base.Id; set => base.Id = value; }
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
         public ICollection<Account>? Accounts { get; set; }
     }
 }

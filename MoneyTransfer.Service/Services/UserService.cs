@@ -31,18 +31,20 @@ namespace MoneyTransfer.Service.Services
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(x => x.Description).ToList();
-                return CustomResponse<AppUserDto>.Fail(new ErrorDto(errors, true), 400);
+                return CustomResponse<AppUserDto>.Fail(new ErrorDto(errors), 400);
             }
             return CustomResponse<AppUserDto>.Success(ObjectMapper.Mapper.Map<AppUserDto>(user), 200);
         }
-        public async Task<CustomResponse<AppUserDto>> GetUserByNameAsync(string name)
+
+        public async Task<CustomResponse<NoDataDto>> DeleteUser(int id)
         {
-            var user = await _userManager.FindByNameAsync(name);
-            if (user == null)
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user==null)
             {
-                return CustomResponse<AppUserDto>.Fail("Username not found", 404, true);
+                return CustomResponse<NoDataDto>.Fail(new ErrorDto("Böyle bir kullanıcı yok"), 400);
             }
-            return CustomResponse<AppUserDto>.Success(ObjectMapper.Mapper.Map<AppUserDto>(user), 200);
+            await _userManager.DeleteAsync(user);
+            return CustomResponse<NoDataDto>.Success(200);
         }
     }
 }

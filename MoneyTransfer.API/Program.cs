@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MoneyTransfer.Core.Configuration;
+using MoneyTransfer.Core.Options;
 using MoneyTransfer.Core.Entities;
 using MoneyTransfer.Core.Repositories;
 using MoneyTransfer.Core.Services;
@@ -20,6 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 

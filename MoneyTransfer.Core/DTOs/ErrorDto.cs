@@ -13,12 +13,12 @@ namespace MoneyTransfer.Core.DTOs
         {
             Errors = new List<string>();
         }
-        public ErrorDto(string error, bool isShow)
+        public ErrorDto(string error)
         {
             if (Errors is null) Errors = new List<string>();
             Errors.Add(error);
         }
-        public ErrorDto(List<string> errors, bool isShow)
+        public ErrorDto(List<string> errors)
         {
             if (Errors is null) Errors = new List<string>();
             Errors = errors;
