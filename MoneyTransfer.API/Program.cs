@@ -10,12 +10,27 @@ using MoneyTransfer.Repository.Contexts;
 using MoneyTransfer.Repository.Repositories;
 using MoneyTransfer.Repository.UnitOfWork;
 using MoneyTransfer.Service.Services;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using MoneyTransfer.Service.Validations;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(v =>
+{
+    v.ImplicitlyValidateChildProperties = true;
+    v.ImplicitlyValidateRootCollectionElements = true;
+    v.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+});
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateAccountDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<GetUserAccountDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CloseAccountDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<TransferMoneyDtoValidator>();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUserService, UserService>();
