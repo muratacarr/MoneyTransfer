@@ -45,5 +45,9 @@ namespace MoneyTransfer.Repository.Repositories
         {
             return _dbSet.Where(predicate);
         }
+        public async Task<bool> IsThereEntity(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.AnyAsync(predicate);
+        }
     }
 }

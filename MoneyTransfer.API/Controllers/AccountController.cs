@@ -8,7 +8,7 @@ namespace MoneyTransfer.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class AccountController : CustomBaseController
     {
         private readonly IAccountService _accountService;

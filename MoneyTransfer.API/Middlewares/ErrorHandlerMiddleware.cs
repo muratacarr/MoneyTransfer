@@ -29,15 +29,12 @@ namespace MoneyTransfer.API.Middlewares
                 switch (error)
                 {
                     case ClientSideException e:
-                        // custom application error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     case NotFoundException e:
-                        // not found error
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
                     default:
-                        // unhandled error
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }

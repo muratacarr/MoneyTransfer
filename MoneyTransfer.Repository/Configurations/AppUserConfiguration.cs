@@ -13,7 +13,7 @@ namespace MoneyTransfer.Repository.Configurations
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-            builder.HasMany(x=>x.Accounts).WithOne(x=>x.AppUser).HasForeignKey(x=>x.AppUserId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x=>x.Accounts).WithOne(x=>x.AppUser).HasForeignKey(x=>x.AppUserId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

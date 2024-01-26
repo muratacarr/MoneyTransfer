@@ -348,7 +348,7 @@ namespace MoneyTransfer.Repository.Migrations
                     b.HasOne("MoneyTransfer.Core.Entities.AppUser", "AppUser")
                         .WithMany("Accounts")
                         .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("AccountType");

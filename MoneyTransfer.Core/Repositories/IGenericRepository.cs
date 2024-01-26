@@ -13,5 +13,6 @@ namespace MoneyTransfer.Core.Repositories
         IQueryable<T> Where(Expression<Func<T, bool>> predicate);
         Task<T> AddAsync(T entity);
         void Delete(T entity);
+        Task<bool> IsThereEntity(Expression<Func<T, bool>> predicate);
     }
 }

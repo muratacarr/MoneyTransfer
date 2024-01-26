@@ -12,7 +12,7 @@ using MoneyTransfer.Repository.Contexts;
 namespace MoneyTransfer.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240125221750_Initial")]
+    [Migration("20240126063249_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -351,7 +351,7 @@ namespace MoneyTransfer.Repository.Migrations
                     b.HasOne("MoneyTransfer.Core.Entities.AppUser", "AppUser")
                         .WithMany("Accounts")
                         .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("AccountType");

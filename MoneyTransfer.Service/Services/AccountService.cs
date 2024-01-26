@@ -34,12 +34,13 @@ namespace MoneyTransfer.Service.Services
                 AppUserId = createAccountDto.AppUserId,
             };
             var result = await _repository.AddAsync(account);
-            await _unitOfWork.SaveChangesAsync();
-
-            if (result == null)
+            if (result==null)
             {
                 return CustomResponse<AccountDto>.Fail(new ErrorDto("Hesap oluşturulamadı."), 400);
             }
+
+            await _unitOfWork.SaveChangesAsync();
+
             return CustomResponse<AccountDto>.Success(ObjectMapper.Mapper.Map<AccountDto>(account), 200);
         }
         public async Task<CustomResponse<List<AccountDto>>> GetUserAccountAsync(GetUserAccountsDto getUserAccountsDto)
